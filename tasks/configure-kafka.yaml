@@ -1,0 +1,36 @@
+---
+# Kafka Tasks
+- name: Create kafka zookeeper myid
+  ansible.builtin.shell: "echo -n '{{ kafka_conf_broker_id }}' > {{ zookeeper_conf_datadir }}/myid"
+  args:
+    warn: no
+- name: "Copy zookeeper.properties"
+  template:
+    src: "config/zookeeper.properties"
+    dest: "{{ kafka_home_dir }}/config/zookeeper.properties"
+    owner: "kafka"
+    mode: 0444
+
+- name: "Copy server.properties"
+  template:
+    src: "config/server.properties"
+    dest: "{{ kafka_home_dir }}/config/server.properties"
+    owner: "kafka"
+    mode: 0444
+
+- name: "Copy zookeeper systemd unit file"
+  template:
+    src: "systemd/zookeeper.service"
+    dest: "/etc/systemd/system/{{ zookeeper_service_name }}.service"
+    owner: root
+  notify:
+    - Reload systemd
+    
+- name: "Copy kafka systemd unit file"
+  template:
+    src: "systemd/kafka.service"
+    dest: "/etc/systemd/system/kafka.service"
+    owner: root
+  notify:
+    - Reload systemd
+  

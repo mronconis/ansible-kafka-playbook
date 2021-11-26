@@ -1,0 +1,22 @@
+
+[Unit]
+Description=Apache Kafka
+Requires={{ zookeeper_service_name }}.service
+After={{ zookeeper_service_name }}.service
+
+[Service]
+Type=simple
+LimitNOFILE=500000
+
+User=kafka
+Group=kafka
+
+ExecStart={{ kafka_home_dir }}/bin/kafka-server-start.sh  {{ kafka_home_dir }}/config/server.properties
+ExecStop={{ kafka_home_dir }}/bin/kafka-server-stop.sh
+
+Environment="KAFKA_HEAP_OPTS={{ kafka_env_heap_opts }}"
+Environment=JMX_PORT=9990
+
+[Install]
+WantedBy=multi-user.target
+

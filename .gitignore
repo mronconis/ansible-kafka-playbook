@@ -1,0 +1,16 @@
+
+.vault-password-file
+
+.cache
+.venv
+
+.vagrant
+
+test.yaml
+
+activate
+
+.DS_Store
+
+*.tgz
+

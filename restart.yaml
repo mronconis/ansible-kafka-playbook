@@ -1,0 +1,12 @@
+---
+- hosts: brokers
+  become: yes
+  gather_facts: false
+
+  tasks:
+    - include_tasks: tasks/stop-services.yaml
+    - include_tasks: tasks/start-services.yaml
+
+
+
+    

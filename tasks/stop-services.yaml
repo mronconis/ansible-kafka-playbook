@@ -1,0 +1,10 @@
+---
+- name: "Stop Service"
+  systemd:
+    name: "kafka"
+    state: "stopped"
+
+- name: "Stop Zookeeper"
+  systemd:
+    name: "{{ zookeeper_service_name }}"
+    state: "stopped"

@@ -1,0 +1,6 @@
+---
+zookeeper_service_name: kafka-zookeeper
+zookeeper_env_heap_opts: -Xmx512M -Xms512M
+zookeeper_env_log4j_opts: "-Dlog4j.configuration=file:{{ kafka_home_dir }}/config/log4j.properties"
+
+zookeeper_conf_datadir: /opt/kafka/data/zookeeper/data

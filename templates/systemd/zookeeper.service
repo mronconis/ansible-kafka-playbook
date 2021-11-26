@@ -1,0 +1,19 @@
+
+[Unit]
+Description=zookeeper
+After=syslog.target network.target
+
+[Service]
+Type=simple
+
+User=kafka
+Group=kafka
+
+ExecStart={{kafka_home_dir}}/bin/zookeeper-server-start.sh {{kafka_home_dir}}/config/zookeeper.properties
+ExecStop={{kafka_home_dir}}/bin/zookeeper-server-stop.sh
+
+Environment="KAFKA_LOG4J_OPTS={{ zookeeper_env_log4j_opts }}"
+Environment="KAFKA_HEAP_OPTS={{ zookeeper_env_heap_opts }}"
+
+[Install]
+WantedBy=multi-user.target

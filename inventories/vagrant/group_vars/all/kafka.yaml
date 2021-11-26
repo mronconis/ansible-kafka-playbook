@@ -1,0 +1,4 @@
+---
+kafka_env_heap_opts: "-Xms1G -Xmx1G"
+kafka_conf_log_dirs: /opt/kafka/data/kafka/logs
+

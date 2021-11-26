@@ -1,0 +1,46 @@
+---
+- hosts: brokers
+  become: yes
+  gather_facts: false
+
+  tasks:
+    - name: Make sure we have a 'kafka' group
+      group:
+        name: kafka
+        state: present
+    - name: Add the user 'kafka'
+      ansible.builtin.user:
+        name: "kafka"
+        home: /opt/kafka
+        state: present
+    - name: Install openjdk packages 
+      yum:
+        name: java-1.8.0-openjdk
+        state: present
+    - name: Ensure kafka log directory exists
+      file:
+        path: "{{ kafka_conf_log_dirs }}"
+        state: directory
+        owner: "kafka"
+    - name: Ensure zookeeper data directory exists
+      file:
+        path: "{{ zookeeper_conf_datadir }}"
+        state: directory
+        owner: "kafka"
+    - name: Unarchive kafka dist
+      unarchive:
+        src: https://dlcdn.apache.org/kafka/3.0.0/kafka_2.13-3.0.0.tgz
+        dest: /opt/kafka
+        remote_src: false
+        validate_certs: false
+        owner: "kafka"
+    - include_tasks: tasks/configure-kafka.yaml
+    - include_tasks: tasks/start-services.yaml
+  handlers:
+    - name: Reload systemd
+      systemd:
+        daemon_reload: true
+
+
+
+    

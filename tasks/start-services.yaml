@@ -1,0 +1,10 @@
+---
+- name: "Start Zookeeper"
+  systemd:
+    name: "{{ zookeeper_service_name }}"
+    state: "started"
+
+- name: "Start Kafka"
+  systemd:
+    name: "kafka"
+    state: "started"

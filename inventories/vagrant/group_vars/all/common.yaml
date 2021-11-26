@@ -1,0 +1,8 @@
+---
+ansible_user: kafka
+ansible_password: "{{ vaulted_ansible_password }}"
+
+env_name: "vagrant"
+
+kafka_home_dir: /opt/kafka/kafka_2.13-3.0.0
+
